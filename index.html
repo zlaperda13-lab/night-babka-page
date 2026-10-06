@@ -51,14 +51,18 @@ html,
 body {
     margin: 0;
     min-height: 100%;
+
     background: #010201;
+
     color: #b8c1b8;
+
     font-family: monospace;
 }
 
 body {
     display: flex;
     justify-content: center;
+
     padding: 18px 10px;
 }
 
@@ -72,49 +76,50 @@ body {
     width: 100%;
     max-width: 920px;
 
-    min-height: calc(100dvh - 36px);
+    min-height:
+        calc(100dvh - 36px);
 
     position: relative;
+
     overflow: hidden;
 
     background:
 
         radial-gradient(
             ellipse at 50% 20%,
-            rgba(55,70,55,.18) 0%,
-            rgba(20,25,20,.10) 30%,
+            rgba(45,60,45,.15),
             transparent 65%
         ),
 
         radial-gradient(
             ellipse at 15% 80%,
-            rgba(45,55,45,.14) 0%,
-            transparent 45%
-        ),
-
-        radial-gradient(
-            ellipse at 90% 55%,
-            rgba(35,45,35,.12) 0%,
+            rgba(35,50,35,.12),
             transparent 50%
         ),
 
-        #030403;
+        #020302;
 
-    border: 1px solid #202520;
+    border:
+        1px solid #202520;
 
     box-shadow:
-        inset 0 0 140px rgba(0,0,0,.95),
-        0 0 80px rgba(0,0,0,.95);
+
+        inset 0 0 150px
+        rgba(0,0,0,.95),
+
+        0 0 80px
+        rgba(0,0,0,.95);
 }
 
 
 /* =====================================================
-   BACKGROUND
+   BACKGROUND CONTAINER
 ===================================================== */
 
 .background {
 
     position: absolute;
+
     inset: 0;
 
     overflow: hidden;
@@ -126,152 +131,251 @@ body {
 
 
 /* =====================================================
-   FOG
+   REAL MOVING FOG CLOUDS
 ===================================================== */
 
-.fog {
+.fog-cloud {
 
     position: absolute;
 
-    width: 150%;
-    height: 150%;
+    pointer-events: none;
 
-    left: -25%;
-    top: -25%;
-
-    background:
-
-        radial-gradient(
-            ellipse at 25% 30%,
-            rgba(120,135,120,.20) 0%,
-            rgba(90,105,90,.11) 18%,
-            transparent 42%
-        ),
-
-        radial-gradient(
-            ellipse at 75% 35%,
-            rgba(105,120,105,.16) 0%,
-            rgba(65,80,65,.08) 22%,
-            transparent 45%
-        ),
-
-        radial-gradient(
-            ellipse at 45% 75%,
-            rgba(95,110,95,.17) 0%,
-            rgba(55,65,55,.07) 25%,
-            transparent 48%
-        );
-
-    opacity: .9;
-
-    will-change: transform;
-
-    animation:
-        fogDrift
-        28s
-        ease-in-out
-        infinite
-        alternate;
-}
-
-
-@keyframes fogDrift {
-
-    0% {
-        transform:
-            translate(-5%, -2%)
-            scale(1);
-    }
-
-    25% {
-        transform:
-            translate(4%, 3%)
-            scale(1.06);
-    }
-
-    50% {
-        transform:
-            translate(-3%, 6%)
-            scale(1.12);
-    }
-
-    75% {
-        transform:
-            translate(6%, -4%)
-            scale(1.08);
-    }
-
-    100% {
-        transform:
-            translate(-6%, 3%)
-            scale(1.15);
-    }
-}
-
-
-/* =====================================================
-   SECOND FOG
-===================================================== */
-
-.fog2 {
-
-    position: absolute;
-
-    width: 170%;
-    height: 80%;
-
-    left: -35%;
-    top: 20%;
+    border-radius: 50%;
 
     background:
 
         radial-gradient(
             ellipse at center,
-            rgba(150,160,150,.14) 0%,
-            rgba(100,110,100,.08) 25%,
-            transparent 65%
+            rgba(175,185,175,.18) 0%,
+            rgba(140,150,140,.13) 18%,
+            rgba(105,115,105,.08) 35%,
+            rgba(70,80,70,.035) 55%,
+            transparent 75%
         );
+
+    filter: blur(12px);
+
+    will-change:
+        transform,
+        opacity;
+
+    opacity: .75;
+}
+
+
+/* CLOUD 1 */
+
+.fog-cloud.one {
+
+    width: 620px;
+    height: 210px;
+
+    left: -220px;
+    top: 18%;
+
+    animation:
+        cloudOne
+        18s
+        linear
+        infinite;
+}
+
+
+@keyframes cloudOne {
+
+    0% {
+        transform:
+            translateX(-20px)
+            translateY(20px)
+            scale(1);
+        opacity: .25;
+    }
+
+    25% {
+        opacity: .65;
+    }
+
+    50% {
+        opacity: .85;
+    }
+
+    75% {
+        opacity: .55;
+    }
+
+    100% {
+        transform:
+            translateX(950px)
+            translateY(-20px)
+            scale(1.25);
+        opacity: .2;
+    }
+}
+
+
+/* CLOUD 2 */
+
+.fog-cloud.two {
+
+    width: 700px;
+    height: 240px;
+
+    left: -300px;
+    top: 47%;
+
+    animation:
+        cloudTwo
+        25s
+        linear
+        infinite;
+}
+
+
+@keyframes cloudTwo {
+
+    0% {
+        transform:
+            translateX(-100px)
+            translateY(10px)
+            scale(1.1);
+        opacity: .15;
+    }
+
+    30% {
+        opacity: .55;
+    }
+
+    55% {
+        opacity: .8;
+    }
+
+    80% {
+        opacity: .45;
+    }
+
+    100% {
+        transform:
+            translateX(1050px)
+            translateY(45px)
+            scale(1.35);
+        opacity: .1;
+    }
+}
+
+
+/* CLOUD 3 */
+
+.fog-cloud.three {
+
+    width: 560px;
+    height: 190px;
+
+    left: -180px;
+    top: 72%;
+
+    animation:
+        cloudThree
+        21s
+        linear
+        infinite;
+}
+
+
+@keyframes cloudThree {
+
+    0% {
+        transform:
+            translateX(-30px)
+            translateY(-15px)
+            scale(1);
+        opacity: .2;
+    }
+
+    35% {
+        opacity: .6;
+    }
+
+    60% {
+        opacity: .75;
+    }
+
+    100% {
+        transform:
+            translateX(980px)
+            translateY(20px)
+            scale(1.3);
+        opacity: .1;
+    }
+}
+
+
+/* =====================================================
+   EXTRA FOG HAZE
+===================================================== */
+
+.fog-haze {
+
+    position: absolute;
+
+    width: 140%;
+
+    height: 40%;
+
+    left: -20%;
+
+    top: 30%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(130,140,130,.08),
+            rgba(170,180,170,.10),
+            rgba(100,110,100,.06),
+            transparent
+        );
+
+    filter: blur(20px);
 
     opacity: .8;
 
-    will-change: transform;
+    will-change:
+        transform;
 
     animation:
-        fogSecond
-        21s
+        hazeMove
+        16s
         ease-in-out
         infinite
         alternate;
 }
 
 
-@keyframes fogSecond {
+@keyframes hazeMove {
 
     0% {
         transform:
             translateX(-12%)
-            translateY(8%)
-            scale(1);
+            scaleX(1);
     }
 
     50% {
         transform:
-            translateX(10%)
-            translateY(-4%)
-            scale(1.12);
+            translateX(8%)
+            scaleX(1.1);
     }
 
     100% {
         transform:
-            translateX(-5%)
-            translateY(5%)
-            scale(1.2);
+            translateX(-4%)
+            scaleX(1.2);
     }
 }
 
 
 /* =====================================================
-   VIGNETTE
+   DARK VIGNETTE
 ===================================================== */
 
 .vignette {
@@ -284,12 +388,13 @@ body {
 
         radial-gradient(
             ellipse at center,
-            transparent 28%,
-            rgba(0,0,0,.22) 55%,
-            rgba(0,0,0,.78) 100%
+            transparent 25%,
+            rgba(0,0,0,.25) 55%,
+            rgba(0,0,0,.82) 100%
         );
 
-    will-change: transform;
+    will-change:
+        transform;
 
     animation:
         vignetteMove
@@ -303,11 +408,13 @@ body {
 @keyframes vignetteMove {
 
     from {
-        transform: scale(1);
+        transform:
+            scale(1);
     }
 
     to {
-        transform: scale(1.08);
+        transform:
+            scale(1.08);
     }
 }
 
@@ -319,6 +426,7 @@ body {
 .scanlines {
 
     position: absolute;
+
     inset: 0;
 
     background:
@@ -407,7 +515,9 @@ body {
 .header,
 .network,
 .footer {
+
     position: relative;
+
     z-index: 10;
 }
 
@@ -462,7 +572,8 @@ body {
 
     max-width: 100%;
 
-    padding: 3px 5px;
+    padding:
+        3px 5px;
 
     font-size:
         clamp(
@@ -487,7 +598,7 @@ body {
 
 
 /* =====================================================
-   GLITCH LAYERS
+   GLITCH
 ===================================================== */
 
 .slogan .red,
@@ -502,8 +613,6 @@ body {
     padding: inherit;
 
     pointer-events: none;
-
-    white-space: inherit;
 }
 
 
@@ -534,10 +643,6 @@ body {
         steps(1, end);
 }
 
-
-/* =====================================================
-   MAIN SLOGAN FLICKER
-===================================================== */
 
 @keyframes sloganFlicker {
 
@@ -570,61 +675,76 @@ body {
 }
 
 
-/* =====================================================
-   RED GLITCH
-   РЕЗКИЕ УДАРЫ, БЕЗ ПЛАВНОГО ПОЯВЛЕНИЯ
-===================================================== */
-
 @keyframes redGlitch {
 
     0%,
     72%,
     87%,
     100% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 
     73% {
+
         opacity: .9;
-        transform: translateX(-7px);
+
+        transform:
+            translateX(-7px);
     }
 
     74% {
+
         opacity: .65;
-        transform: translateX(7px);
+
+        transform:
+            translateX(7px);
     }
 
     75% {
+
         opacity: .35;
-        transform: translateX(-3px);
+
+        transform:
+            translateX(-3px);
     }
 
     76% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 
     88% {
+
         opacity: .85;
-        transform: translateX(6px);
+
+        transform:
+            translateX(6px);
     }
 
     89% {
+
         opacity: .5;
-        transform: translateX(-4px);
+
+        transform:
+            translateX(-4px);
     }
 
     90% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 }
 
-
-/* =====================================================
-   BLUE GLITCH
-===================================================== */
 
 @keyframes blueGlitch {
 
@@ -632,38 +752,59 @@ body {
     57%,
     82%,
     100% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 
     58% {
+
         opacity: .85;
-        transform: translateX(7px);
+
+        transform:
+            translateX(7px);
     }
 
     59% {
+
         opacity: .55;
-        transform: translateX(-6px);
+
+        transform:
+            translateX(-6px);
     }
 
     60% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 
     83% {
+
         opacity: .8;
-        transform: translateX(-6px);
+
+        transform:
+            translateX(-6px);
     }
 
     84% {
+
         opacity: .45;
-        transform: translateX(4px);
+
+        transform:
+            translateX(4px);
     }
 
     85% {
+
         opacity: 0;
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 }
 
@@ -685,6 +826,7 @@ body {
 
 
 .status span {
+
     color: #8da38d;
 }
 
@@ -770,7 +912,7 @@ body {
 
 
 /* =====================================================
-   HOVER ONLY FOR REAL POINTER DEVICES
+   HOVER
 ===================================================== */
 
 @media (hover: hover) and (pointer: fine) {
@@ -901,7 +1043,7 @@ body {
 
 /* =====================================================
    MOBILE
-   ВСЕГДА 2 × 2
+   ALWAYS 2 × 2
 ===================================================== */
 
 @media (max-width: 700px) {
@@ -1002,12 +1144,22 @@ body {
 
         font-size: 8px;
     }
+
+
+    /* ТУМАН НА ТЕЛЕФОНЕ ДЕЛАЕМ ЧУТЬ ЗАМЕТНЕЕ */
+
+    .fog-cloud {
+        opacity: .9;
+    }
+
+    .fog-haze {
+        opacity: .9;
+    }
 }
 
 
 /* =====================================================
    VERY SMALL PHONE
-   STILL 2 × 2
 ===================================================== */
 
 @media (max-width: 380px) {
@@ -1079,13 +1231,28 @@ body {
 
     <div class="background">
 
-        <div class="fog"></div>
+        <!-- MOVING FOG -->
 
-        <div class="fog2"></div>
+        <div class="fog-cloud one"></div>
+
+        <div class="fog-cloud two"></div>
+
+        <div class="fog-cloud three"></div>
+
+        <div class="fog-haze"></div>
+
+
+        <!-- DARK VIGNETTE -->
 
         <div class="vignette"></div>
 
+
+        <!-- OLD MONITOR EFFECT -->
+
         <div class="scanlines"></div>
+
+
+        <!-- STATIC -->
 
         <div class="static one"></div>
 
