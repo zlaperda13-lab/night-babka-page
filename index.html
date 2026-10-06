@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#010201"
+>
+
+<meta
+    name="description"
+    content="NIGHT BABKA — истории, которые лучше не читать ночью."
+>
+
+<meta
+    property="og:title"
+    content="NIGHT BABKA"
+>
+
+<meta
+    property="og:description"
+    content="Истории, которые лучше не читать ночью."
+>
+
+<meta
+    property="og:type"
+    content="website"
+>
 
 <title>NIGHT BABKA</title>
 
+
 <style>
 
-/* =========================
+/* =====================================================
    BASE
-========================= */
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -20,242 +51,377 @@ html,
 body {
     margin: 0;
     min-height: 100%;
-
     background: #010201;
-
     color: #b8c1b8;
-
     font-family: monospace;
 }
 
 body {
     display: flex;
     justify-content: center;
-
-    padding: 20px 12px;
+    padding: 18px 10px;
 }
 
 
-/* =========================
+/* =====================================================
    PAGE
-========================= */
+===================================================== */
 
 .page {
 
     width: 100%;
-    max-width: 900px;
+    max-width: 920px;
 
-    min-height: calc(100vh - 40px);
+    min-height: calc(100dvh - 36px);
 
     position: relative;
-
     overflow: hidden;
 
-    padding: 32px;
-
-    border: 1px solid #1d221e;
-
     background:
-        linear-gradient(
-            rgba(70,90,70,.012) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(70,90,70,.012) 1px,
-            transparent 1px
-        ),
-        #040504;
 
-    background-size: 25px 25px;
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(55,70,55,.18) 0%,
+            rgba(20,25,20,.10) 30%,
+            transparent 65%
+        ),
+
+        radial-gradient(
+            ellipse at 15% 80%,
+            rgba(45,55,45,.14) 0%,
+            transparent 45%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 55%,
+            rgba(35,45,35,.12) 0%,
+            transparent 50%
+        ),
+
+        #030403;
+
+    border: 1px solid #202520;
 
     box-shadow:
-        0 0 80px rgba(0,0,0,.95),
-        inset 0 0 120px rgba(0,0,0,.85);
+        inset 0 0 140px rgba(0,0,0,.95),
+        0 0 80px rgba(0,0,0,.95);
 }
 
 
-/* =========================
-   SCANLINES
-========================= */
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
-.scanlines {
+.background {
 
     position: absolute;
-
     inset: 0;
 
-    z-index: 2;
+    overflow: hidden;
 
     pointer-events: none;
 
-    opacity: .035;
-
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0px,
-            transparent 4px,
-            rgba(255,255,255,.5) 5px
-        );
+    z-index: 1;
 }
 
 
-/* =========================
+/* =====================================================
    FOG
-========================= */
+===================================================== */
 
 .fog {
-    position: absolute;
-
-    inset: -20%;
-
-    z-index: 3;
-
-    pointer-events: none;
-
-    overflow: hidden;
-}
-
-
-/* первый слой */
-
-.fog::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 130%;
-    height: 55%;
-
-    left: -15%;
-    top: 8%;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(145,155,145,.15) 0%,
-            rgba(110,125,110,.10) 25%,
-            rgba(70,80,70,.055) 45%,
-            transparent 72%
-        );
-
-    opacity: .8;
-
-    animation:
-        fogOne
-        18s
-        ease-in-out
-        infinite
-        alternate;
-}
-
-
-/* второй слой */
-
-.fog::after {
-
-    content: "";
 
     position: absolute;
 
     width: 150%;
-    height: 48%;
+    height: 150%;
 
     left: -25%;
-    top: 45%;
+    top: -25%;
 
     background:
+
         radial-gradient(
-            ellipse at center,
-            rgba(125,140,125,.12) 0%,
-            rgba(80,95,80,.065) 35%,
-            transparent 72%
+            ellipse at 25% 30%,
+            rgba(120,135,120,.20) 0%,
+            rgba(90,105,90,.11) 18%,
+            transparent 42%
+        ),
+
+        radial-gradient(
+            ellipse at 75% 35%,
+            rgba(105,120,105,.16) 0%,
+            rgba(65,80,65,.08) 22%,
+            transparent 45%
+        ),
+
+        radial-gradient(
+            ellipse at 45% 75%,
+            rgba(95,110,95,.17) 0%,
+            rgba(55,65,55,.07) 25%,
+            transparent 48%
         );
 
-    opacity: .65;
+    opacity: .9;
+
+    will-change: transform;
 
     animation:
-        fogTwo
-        24s
+        fogDrift
+        28s
         ease-in-out
         infinite
         alternate;
 }
 
 
-@keyframes fogOne {
+@keyframes fogDrift {
 
     0% {
         transform:
-            translateX(-13%)
-            translateY(5%)
+            translate(-5%, -2%)
             scale(1);
+    }
+
+    25% {
+        transform:
+            translate(4%, 3%)
+            scale(1.06);
     }
 
     50% {
         transform:
-            translateX(8%)
-            translateY(-3%)
+            translate(-3%, 6%)
             scale(1.12);
     }
 
-    100% {
+    75% {
         transform:
-            translateX(-2%)
-            translateY(7%)
-            scale(1.2);
-    }
-}
-
-
-@keyframes fogTwo {
-
-    0% {
-        transform:
-            translateX(12%)
-            translateY(-4%)
-            scale(1.1);
-    }
-
-    50% {
-        transform:
-            translateX(-10%)
-            translateY(5%)
-            scale(1);
+            translate(6%, -4%)
+            scale(1.08);
     }
 
     100% {
         transform:
-            translateX(5%)
-            translateY(-6%)
+            translate(-6%, 3%)
             scale(1.15);
     }
 }
 
 
-/* =========================
+/* =====================================================
+   SECOND FOG
+===================================================== */
+
+.fog2 {
+
+    position: absolute;
+
+    width: 170%;
+    height: 80%;
+
+    left: -35%;
+    top: 20%;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            rgba(150,160,150,.14) 0%,
+            rgba(100,110,100,.08) 25%,
+            transparent 65%
+        );
+
+    opacity: .8;
+
+    will-change: transform;
+
+    animation:
+        fogSecond
+        21s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes fogSecond {
+
+    0% {
+        transform:
+            translateX(-12%)
+            translateY(8%)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateX(10%)
+            translateY(-4%)
+            scale(1.12);
+    }
+
+    100% {
+        transform:
+            translateX(-5%)
+            translateY(5%)
+            scale(1.2);
+    }
+}
+
+
+/* =====================================================
+   VIGNETTE
+===================================================== */
+
+.vignette {
+
+    position: absolute;
+
+    inset: -20%;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 28%,
+            rgba(0,0,0,.22) 55%,
+            rgba(0,0,0,.78) 100%
+        );
+
+    will-change: transform;
+
+    animation:
+        vignetteMove
+        14s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes vignetteMove {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+
+/* =====================================================
+   SCANLINES
+===================================================== */
+
+.scanlines {
+
+    position: absolute;
+    inset: 0;
+
+    background:
+
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 5px,
+            rgba(180,190,180,.035) 6px
+        );
+
+    opacity: .7;
+}
+
+
+/* =====================================================
+   STATIC
+===================================================== */
+
+.static {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background:
+        rgba(180,195,180,.14);
+
+    opacity: 0;
+
+    animation:
+        staticMove
+        6s
+        infinite;
+}
+
+.static.one {
+    top: 25%;
+    animation-delay: 1s;
+}
+
+.static.two {
+    top: 62%;
+    animation-delay: 3.4s;
+}
+
+.static.three {
+    top: 81%;
+    animation-delay: 5s;
+}
+
+
+@keyframes staticMove {
+
+    0%,
+    84%,
+    100% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: .5;
+    }
+
+    86% {
+        opacity: 0;
+    }
+
+    89% {
+        opacity: .3;
+    }
+
+    90% {
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
    CONTENT
-========================= */
+===================================================== */
 
 .header,
 .network,
 .footer {
-
     position: relative;
-
     z-index: 10;
 }
 
 
-/* =========================
+/* =====================================================
    HEADER
-========================= */
+===================================================== */
 
 .header {
 
     text-align: center;
+
+    padding:
+        34px 20px 0;
 
     margin-bottom: 38px;
 }
@@ -277,14 +443,14 @@ body {
     color: #d3dad3;
 
     text-shadow:
-        0 0 14px
-        rgba(150,180,150,.12);
+        0 0 10px
+        rgba(170,190,170,.14);
 }
 
 
-/* =========================
+/* =====================================================
    SLOGAN
-========================= */
+===================================================== */
 
 .slogan {
 
@@ -292,26 +458,26 @@ body {
 
     display: inline-block;
 
-    max-width: 100%;
-
     margin-top: 18px;
 
-    padding: 2px 4px;
+    max-width: 100%;
+
+    padding: 3px 5px;
 
     font-size:
         clamp(
-            12px,
-            3.1vw,
+            11px,
+            3vw,
             18px
         );
 
     font-weight: bold;
 
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 
     line-height: 1.5;
 
-    color: #9aa59a;
+    color: #a5aea5;
 
     animation:
         sloganFlicker
@@ -320,192 +486,191 @@ body {
 }
 
 
-/* красный слой */
+/* =====================================================
+   GLITCH LAYERS
+===================================================== */
 
-.slogan::before {
-
-    content:
-        "ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ";
+.slogan .red,
+.slogan .blue {
 
     position: absolute;
 
-    left: 0;
-    top: 0;
+    inset: 0;
 
-    width: 100%;
+    width: auto;
 
-    color: #a52220;
-
-    opacity: 0;
+    padding: inherit;
 
     pointer-events: none;
+
+    white-space: inherit;
+}
+
+
+.slogan .red {
+
+    color: #b5221f;
+
+    opacity: 0;
 
     animation:
         redGlitch
-        3.7s
+        3.5s
         infinite
-        steps(1);
+        steps(1, end);
 }
 
 
-/* бирюзовый слой */
+.slogan .blue {
 
-.slogan::after {
-
-    content:
-        "ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-
-    color: #39706d;
+    color: #3f7c79;
 
     opacity: 0;
 
-    pointer-events: none;
-
     animation:
-        cyanGlitch
-        4.9s
+        blueGlitch
+        4.7s
         infinite
-        steps(1);
+        steps(1, end);
 }
 
+
+/* =====================================================
+   MAIN SLOGAN FLICKER
+===================================================== */
 
 @keyframes sloganFlicker {
 
     0%,
-    15%,
     18%,
-    40%,
-    42%,
-    70%,
+    21%,
+    45%,
+    47%,
     72%,
+    74%,
     100% {
         opacity: 1;
     }
 
-    16% {
+    19% {
         opacity: .2;
     }
 
-    17% {
+    20% {
         opacity: .8;
     }
 
-    41% {
+    46% {
         opacity: .35;
     }
 
-    71% {
+    73% {
         opacity: .45;
     }
 }
 
 
+/* =====================================================
+   RED GLITCH
+   РЕЗКИЕ УДАРЫ, БЕЗ ПЛАВНОГО ПОЯВЛЕНИЯ
+===================================================== */
+
 @keyframes redGlitch {
 
     0%,
-    76%,
+    72%,
+    87%,
     100% {
         opacity: 0;
+        transform: translateX(0);
     }
 
-    77% {
+    73% {
         opacity: .9;
-
-        clip-path:
-            inset(0 0 65% 0);
-
-        transform:
-            translateX(-7px);
+        transform: translateX(-7px);
     }
 
-    78% {
-        opacity: .8;
-
-        clip-path:
-            inset(45% 0 20% 0);
-
-        transform:
-            translateX(6px);
+    74% {
+        opacity: .65;
+        transform: translateX(7px);
     }
 
-    79% {
+    75% {
+        opacity: .35;
+        transform: translateX(-3px);
+    }
+
+    76% {
         opacity: 0;
+        transform: translateX(0);
     }
 
-    91% {
-        opacity: .8;
-
-        clip-path:
-            inset(20% 0 55% 0);
-
-        transform:
-            translateX(5px);
+    88% {
+        opacity: .85;
+        transform: translateX(6px);
     }
 
-    92% {
+    89% {
+        opacity: .5;
+        transform: translateX(-4px);
+    }
+
+    90% {
         opacity: 0;
+        transform: translateX(0);
     }
 }
 
 
-@keyframes cyanGlitch {
+/* =====================================================
+   BLUE GLITCH
+===================================================== */
+
+@keyframes blueGlitch {
 
     0%,
-    58%,
+    57%,
+    82%,
     100% {
         opacity: 0;
+        transform: translateX(0);
+    }
+
+    58% {
+        opacity: .85;
+        transform: translateX(7px);
     }
 
     59% {
-        opacity: .8;
-
-        clip-path:
-            inset(60% 0 10% 0);
-
-        transform:
-            translateX(7px);
+        opacity: .55;
+        transform: translateX(-6px);
     }
 
     60% {
-        opacity: .75;
-
-        clip-path:
-            inset(10% 0 65% 0);
-
-        transform:
-            translateX(-6px);
+        opacity: 0;
+        transform: translateX(0);
     }
 
-    61% {
-        opacity: 0;
+    83% {
+        opacity: .8;
+        transform: translateX(-6px);
     }
 
     84% {
-        opacity: .75;
-
-        clip-path:
-            inset(35% 0 35% 0);
-
-        transform:
-            translateX(-5px);
+        opacity: .45;
+        transform: translateX(4px);
     }
 
     85% {
         opacity: 0;
+        transform: translateX(0);
     }
 }
 
 
-/* =========================
+/* =====================================================
    STATUS
-========================= */
+===================================================== */
 
 .status {
 
@@ -515,19 +680,18 @@ body {
 
     letter-spacing: 2px;
 
-    color: #4e584f;
+    color: #687368;
 }
 
 
 .status span {
-
-    color: #789278;
+    color: #8da38d;
 }
 
 
-/* =========================
-   QR NETWORK
-========================= */
+/* =====================================================
+   NETWORK
+===================================================== */
 
 .network {
 
@@ -538,15 +702,19 @@ body {
 
     gap: 22px;
 
+    width: 100%;
     max-width: 700px;
 
     margin: 0 auto;
+
+    padding:
+        0 20px;
 }
 
 
-/* =========================
+/* =====================================================
    NODE
-========================= */
+===================================================== */
 
 .node {
 
@@ -558,16 +726,22 @@ body {
 
     justify-content: center;
 
-    padding: 20px;
+    padding: 18px;
 
-    border: 1px solid #2b332d;
+    border:
+        1px solid #293129;
 
     background:
+
         linear-gradient(
             135deg,
-            rgba(35,45,37,.16),
-            rgba(2,4,3,.94)
+            rgba(35,45,37,.18),
+            rgba(2,4,3,.90)
         );
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(0,0,0,.45);
 
     transition:
         border-color .25s ease,
@@ -576,24 +750,7 @@ body {
 }
 
 
-.node:hover {
-
-    border-color: #647064;
-
-    transform:
-        translateY(-4px);
-
-    box-shadow:
-        0 0 25px
-        rgba(100,130,100,.08);
-}
-
-
 .node a {
-
-    text-decoration: none;
-
-    color: inherit;
 
     width: 100%;
     height: 100%;
@@ -605,12 +762,37 @@ body {
     align-items: center;
 
     justify-content: center;
+
+    text-decoration: none;
+
+    color: inherit;
 }
 
 
-/* =========================
+/* =====================================================
+   HOVER ONLY FOR REAL POINTER DEVICES
+===================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .node:hover {
+
+        border-color: #667266;
+
+        transform:
+            translateY(-4px);
+
+        box-shadow:
+
+            0 0 28px
+            rgba(100,130,100,.10);
+    }
+}
+
+
+/* =====================================================
    QR
-========================= */
+===================================================== */
 
 .qr {
 
@@ -621,11 +803,12 @@ body {
 
     background: #eeeeea;
 
-    border: 1px solid #9aa29a;
+    border:
+        1px solid #9aa29a;
 
     box-shadow:
-        0 0 18px
-        rgba(0,0,0,.7);
+        0 0 20px
+        rgba(0,0,0,.75);
 }
 
 
@@ -640,9 +823,9 @@ body {
 }
 
 
-/* =========================
+/* =====================================================
    LABELS
-========================= */
+===================================================== */
 
 .label {
 
@@ -652,9 +835,7 @@ body {
 
     letter-spacing: 3px;
 
-    color: #899489;
-
-    text-transform: uppercase;
+    color: #9aa59a;
 }
 
 
@@ -666,21 +847,23 @@ body {
 
     letter-spacing: 1px;
 
-    color: #4e584f;
+    color: #687368;
 }
 
 
-/* =========================
+/* =====================================================
    FOOTER
-========================= */
+===================================================== */
 
 .footer {
 
     margin-top: 45px;
 
-    padding-top: 20px;
+    padding:
+        20px 20px 28px;
 
-    border-top: 1px solid #1c211d;
+    border-top:
+        1px solid #252c26;
 
     text-align: center;
 
@@ -690,15 +873,15 @@ body {
 
     letter-spacing: 1px;
 
-    color: #485148;
+    color: #687368;
 }
 
 
-.footer .warning {
+.warning {
 
     margin-top: 12px;
 
-    color: #626d62;
+    color: #7b867b;
 }
 
 
@@ -706,51 +889,62 @@ body {
 
     margin-top: 18px;
 
-    font-size: 7px;
+    font-size: 9px;
 
     letter-spacing: 2px;
 
-    color: #303730;
+    color: #566056;
 
-    opacity: .65;
+    opacity: .9;
 }
 
 
-/* =========================
-   PHONE
-   ALWAYS 2 × 2
-========================= */
+/* =====================================================
+   MOBILE
+   ВСЕГДА 2 × 2
+===================================================== */
 
 @media (max-width: 700px) {
 
     body {
-        padding: 8px;
+        padding: 6px;
     }
 
     .page {
 
-        padding:
-            20px 12px;
-
         min-height:
-            calc(100vh - 16px);
+            calc(100dvh - 12px);
     }
 
     .header {
 
-        margin-bottom: 28px;
+        padding:
+            24px 10px 0;
+
+        margin-bottom: 25px;
     }
 
     .header h1 {
+
+        font-size: 30px;
 
         letter-spacing: 5px;
     }
 
     .slogan {
 
-        font-size: 12px;
+        font-size: 11px;
 
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
+
+        margin-top: 15px;
+    }
+
+    .status {
+
+        font-size: 8px;
+
+        letter-spacing: 1px;
     }
 
     .network {
@@ -758,82 +952,117 @@ body {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
-        gap: 12px;
+        gap: 10px;
+
+        padding:
+            0 10px;
     }
 
     .node {
 
         min-height: 190px;
 
-        padding: 10px;
+        padding: 8px;
     }
 
     .qr {
 
-        width: 110px;
-        height: 110px;
+        width: 105px;
+        height: 105px;
 
-        padding: 6px;
+        padding: 5px;
     }
 
     .label {
 
-        margin-top: 10px;
+        margin-top: 9px;
 
-        font-size: 10px;
+        font-size: 9px;
 
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
     }
 
     .description {
 
-        font-size: 7px;
+        margin-top: 5px;
 
-        letter-spacing: .5px;
+        font-size: 8px;
+
+        letter-spacing: .4px;
     }
 
-    .status {
+    .footer {
 
-        font-size: 9px;
+        margin-top: 30px;
+
+        font-size: 8px;
+    }
+
+    .author {
+
+        font-size: 8px;
     }
 }
 
 
-/* =========================
+/* =====================================================
    VERY SMALL PHONE
    STILL 2 × 2
-========================= */
+===================================================== */
 
 @media (max-width: 380px) {
 
     .network {
 
-        gap: 8px;
+        gap: 7px;
+
+        padding:
+            0 7px;
     }
 
     .node {
 
-        min-height: 175px;
+        min-height: 165px;
 
-        padding: 7px;
+        padding: 6px;
     }
 
     .qr {
 
-        width: 92px;
-        height: 92px;
+        width: 88px;
+        height: 88px;
     }
 
     .label {
 
-        font-size: 9px;
+        font-size: 8px;
 
         letter-spacing: 1px;
     }
 
     .description {
 
-        font-size: 6px;
+        font-size: 8px;
+    }
+
+    .author {
+
+        font-size: 8px;
+    }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation: none !important;
     }
 }
 
@@ -846,14 +1075,25 @@ body {
 <div class="page">
 
 
-    <!-- SCANLINES -->
+    <!-- BACKGROUND -->
 
-    <div class="scanlines"></div>
+    <div class="background">
 
+        <div class="fog"></div>
 
-    <!-- LIVING FOG -->
+        <div class="fog2"></div>
 
-    <div class="fog"></div>
+        <div class="vignette"></div>
+
+        <div class="scanlines"></div>
+
+        <div class="static one"></div>
+
+        <div class="static two"></div>
+
+        <div class="static three"></div>
+
+    </div>
 
 
     <!-- HEADER -->
@@ -869,23 +1109,34 @@ body {
 
             ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
 
+            <span
+                class="red"
+                aria-hidden="true"
+            >
+                ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
+            </span>
+
+            <span
+                class="blue"
+                aria-hidden="true"
+            >
+                ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
+            </span>
+
         </div>
 
 
         <div class="status">
 
             NETWORK STATUS:
-
-            <span>
-                ALWAYS ACTIVE
-            </span>
+            <span>ALWAYS ACTIVE</span>
 
         </div>
 
     </header>
 
 
-    <!-- NETWORK -->
+    <!-- QR NETWORK -->
 
     <main class="network">
 
@@ -909,11 +1160,9 @@ body {
 
                 </div>
 
-
                 <div class="label">
                     VK
                 </div>
-
 
                 <div class="description">
                     SOCIAL NODE
@@ -943,14 +1192,12 @@ body {
 
                 </div>
 
-
                 <div class="label">
                     TELEGRAM
                 </div>
 
-
                 <div class="description">
-                    PRIVATE CHANNEL
+                    PUBLIC CHANNEL
                 </div>
 
             </a>
@@ -977,11 +1224,9 @@ body {
 
                 </div>
 
-
                 <div class="label">
                     OK
                 </div>
-
 
                 <div class="description">
                     ARCHIVE NODE
@@ -1011,11 +1256,9 @@ body {
 
                 </div>
 
-
                 <div class="label">
                     YOUTUBE
                 </div>
-
 
                 <div class="description">
                     VIDEO FEED
@@ -1054,6 +1297,7 @@ body {
         </div>
 
     </footer>
+
 
 </div>
 
