@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIGHT BABKA</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+    background: #080909;
+    color: #b8c0b8;
+    font-family: monospace;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+}
+
+.page {
+    width: 100%;
+    max-width: 900px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    border: 1px solid #252b27;
+    background:
+        linear-gradient(rgba(0,255,120,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,120,.025) 1px, transparent 1px),
+        #090b0a;
+    background-size: 25px 25px;
+}
+
+.noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .08;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        #fff 4px
+    );
+}
+
+.header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: clamp(28px, 7vw, 60px);
+    letter-spacing: 8px;
+    color: #d4ddd4;
+}
+
+.status {
+    margin-top: 10px;
+    color: #657267;
+    font-size: 12px;
+}
+
+.status span {
+    color: #78a878;
+}
+
+.network {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    align-items: center;
+}
+
+.node {
+    min-height: 170px;
+    border: 1px solid #303832;
+    background: rgba(10,13,11,.88);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.node:nth-child(2) {
+    transform: translateY(25px);
+}
+
+.node:nth-child(4) {
+    transform: translateY(-20px);
+}
+
+.node:nth-child(6) {
+    transform: translateY(30px);
+}
+
+.qr {
+    width: 115px;
+    height: 115px;
+    background: #eee;
+    padding: 5px;
+}
+
+.label {
+    margin-top: 12px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #6f796f;
+}
+
+.center {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 220px;
+    border-color: #536053;
+}
+
+.center .qr {
+    width: 150px;
+    height: 150px;
+}
+
+.center .label {
+    color: #9baa9b;
+}
+
+.footer {
+    position: relative;
+    margin-top: 45px;
+    text-align: center;
+    font-size: 10px;
+    color: #4f584f;
+    line-height: 1.8;
+}
+
+@media (max-width: 650px) {
+    .page {
+        padding: 18px;
+    }
+
+    .network {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .center {
+        grid-column: 1 / 3;
+        grid-row: auto;
+    }
+
+    .node:nth-child(2),
+    .node:nth-child(4),
+    .node:nth-child(6) {
+        transform: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<div class="noise"></div>
+
+<div class="header">
+    <h1>NIGHT BABKA</h1>
+    <div class="status">
+        NETWORK STATUS: <span>UNKNOWN</span>
+    </div>
+</div>
+
+<div class="network">
+
+    <div class="node">
+        <div class="qr">QR</div>
+        <div class="label">NODE_01</div>
+    </div>
+
+    <div class="node">
+        <div class="qr">QR</div>
+        <div class="label">NODE_02</div>
+    </div>
+
+    <div class="node">
+        <div class="qr">QR</div>
+        <div class="label">NODE_03</div>
+    </div>
+
+    <div class="node">
+        <div class="qr">QR</div>
+        <div class="label">ARCHIVE</div>
+    </div>
+
+    <div class="node center">
+        <div class="qr">QR</div>
+        <div class="label">ENTER</div>
+    </div>
+
+    <div class="node">
+        <div class="qr">QR</div>
+        <div class="label">UNKNOWN</div>
+    </div>
+
+</div>
+
+<div class="footer">
+    NODE COUNT: 06<br>
+    LAST CONNECTION: UNKNOWN<br>
+    PORT: OPEN
+</div>
+
+</div>
+
+</body>
+</html>
