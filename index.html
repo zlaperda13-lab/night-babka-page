@@ -8,6 +8,10 @@
 
 <style>
 
+/* =========================
+   BASE
+========================= */
+
 * {
     box-sizing: border-box;
 }
@@ -17,7 +21,7 @@ body {
     margin: 0;
     min-height: 100%;
 
-    background: #020302;
+    background: #010201;
 
     color: #b8c1b8;
 
@@ -33,7 +37,7 @@ body {
 
 
 /* =========================
-   MAIN PAGE
+   PAGE
 ========================= */
 
 .page {
@@ -47,109 +51,133 @@ body {
 
     overflow: hidden;
 
-    isolation: isolate;
-
     padding: 32px;
 
-    border: 1px solid #202520;
+    border: 1px solid #1d221e;
 
     background:
-
         linear-gradient(
-            rgba(80,100,80,.018) 1px,
+            rgba(70,90,70,.012) 1px,
             transparent 1px
         ),
-
         linear-gradient(
             90deg,
-            rgba(80,100,80,.018) 1px,
+            rgba(70,90,70,.012) 1px,
             transparent 1px
         ),
-
-        #050605;
+        #040504;
 
     background-size: 25px 25px;
 
     box-shadow:
-
-        0 0 70px rgba(0,0,0,.9),
-
-        inset 0 0 100px rgba(0,0,0,.7);
+        0 0 80px rgba(0,0,0,.95),
+        inset 0 0 120px rgba(0,0,0,.85);
 }
 
 
 /* =========================
-   NOISE + FOG
+   SCANLINES
 ========================= */
 
-.noise {
+.scanlines {
 
     position: absolute;
 
     inset: 0;
 
+    z-index: 2;
+
     pointer-events: none;
 
-    overflow: hidden;
-
-    opacity: .045;
+    opacity: .035;
 
     background:
-
         repeating-linear-gradient(
             0deg,
             transparent 0px,
-            transparent 3px,
-            #ffffff 4px
+            transparent 4px,
+            rgba(255,255,255,.5) 5px
         );
-
-    z-index: 5;
 }
 
 
-/* FOG */
+/* =========================
+   FOG
+========================= */
 
-.noise::before,
-.noise::after {
+.fog {
+    position: absolute;
+
+    inset: -20%;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+
+/* первый слой */
+
+.fog::before {
 
     content: "";
 
     position: absolute;
 
-    width: 160%;
-    height: 65%;
+    width: 130%;
+    height: 55%;
 
-    left: -30%;
-
-    pointer-events: none;
+    left: -15%;
+    top: 8%;
 
     background:
-
         radial-gradient(
             ellipse at center,
-
-            rgba(130,145,130,.09) 0%,
-
-            rgba(100,115,100,.045) 25%,
-
-            rgba(50,60,50,.02) 48%,
-
+            rgba(145,155,145,.15) 0%,
+            rgba(110,125,110,.10) 25%,
+            rgba(70,80,70,.055) 45%,
             transparent 72%
         );
 
-    filter: blur(28px);
+    opacity: .8;
 
-    opacity: .65;
+    animation:
+        fogOne
+        18s
+        ease-in-out
+        infinite
+        alternate;
 }
 
 
-.noise::before {
+/* второй слой */
 
-    top: 12%;
+.fog::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 150%;
+    height: 48%;
+
+    left: -25%;
+    top: 45%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(125,140,125,.12) 0%,
+            rgba(80,95,80,.065) 35%,
+            transparent 72%
+        );
+
+    opacity: .65;
 
     animation:
-
-        fogMove
+        fogTwo
         24s
         ease-in-out
         infinite
@@ -157,78 +185,58 @@ body {
 }
 
 
-.noise::after {
-
-    top: 48%;
-
-    opacity: .38;
-
-    transform: scaleY(.75);
-
-    animation:
-
-        fogMoveReverse
-        31s
-        ease-in-out
-        infinite
-        alternate;
-}
-
-
-/* FOG MOVEMENT */
-
-@keyframes fogMove {
+@keyframes fogOne {
 
     0% {
-
         transform:
-            translate3d(-12%, 0, 0)
+            translateX(-13%)
+            translateY(5%)
             scale(1);
     }
 
     50% {
-
         transform:
-            translate3d(8%, 4%, 0)
-            scale(1.08);
+            translateX(8%)
+            translateY(-3%)
+            scale(1.12);
     }
 
     100% {
-
         transform:
-            translate3d(-3%, -3%, 0)
+            translateX(-2%)
+            translateY(7%)
+            scale(1.2);
+    }
+}
+
+
+@keyframes fogTwo {
+
+    0% {
+        transform:
+            translateX(12%)
+            translateY(-4%)
+            scale(1.1);
+    }
+
+    50% {
+        transform:
+            translateX(-10%)
+            translateY(5%)
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translateX(5%)
+            translateY(-6%)
             scale(1.15);
     }
 }
 
 
-@keyframes fogMoveReverse {
-
-    0% {
-
-        transform:
-            translate3d(10%, 3%, 0)
-            scale(1.1);
-    }
-
-    50% {
-
-        transform:
-            translate3d(-8%, -2%, 0)
-            scale(1);
-    }
-
-    100% {
-
-        transform:
-            translate3d(5%, 4%, 0)
-            scale(1.12);
-    }
-}
-
-
 /* =========================
-   CONTENT ABOVE FOG
+   CONTENT
 ========================= */
 
 .header,
@@ -269,8 +277,7 @@ body {
     color: #d3dad3;
 
     text-shadow:
-
-        0 0 12px
+        0 0 14px
         rgba(150,180,150,.12);
 }
 
@@ -306,289 +313,191 @@ body {
 
     color: #9aa59a;
 
-    text-shadow:
-
-        0 0 8px
-        rgba(160,40,35,.35);
-
     animation:
-
-        flicker
-        6s
-        infinite,
-
-        jolt
-        7s
+        sloganFlicker
+        5s
         infinite;
 }
 
 
-/* GLITCH COPIES */
+/* красный слой */
 
-.slogan::before,
-.slogan::after {
+.slogan::before {
 
-    content: attr(data-text);
+    content:
+        "ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ";
 
     position: absolute;
 
-    inset: 0;
+    left: 0;
+    top: 0;
 
-    padding: inherit;
+    width: 100%;
 
-    letter-spacing: inherit;
-
-    font-weight: inherit;
-
-    line-height: inherit;
-
-    text-align: center;
-
-    text-shadow: none;
+    color: #a52220;
 
     opacity: 0;
 
     pointer-events: none;
-}
-
-
-.slogan::before {
-
-    color: #b3201d;
 
     animation:
-
-        glitch-red
-        4.3s
+        redGlitch
+        3.7s
         infinite
-        steps(1, end);
+        steps(1);
 }
 
+
+/* бирюзовый слой */
 
 .slogan::after {
 
-    color: #3e7a78;
+    content:
+        "ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    color: #39706d;
+
+    opacity: 0;
+
+    pointer-events: none;
 
     animation:
-
-        glitch-cyan
-        5.1s
+        cyanGlitch
+        4.9s
         infinite
-        steps(1, end);
+        steps(1);
 }
 
 
-/* FLICKER */
+@keyframes sloganFlicker {
 
-@keyframes flicker {
-
-    0%, 17%, 19%, 22%, 54%, 56%, 100% {
+    0%,
+    15%,
+    18%,
+    40%,
+    42%,
+    70%,
+    72%,
+    100% {
         opacity: 1;
     }
 
-    18% {
-        opacity: .15;
-    }
-
-    20% {
-        opacity: .6;
-    }
-
-    21% {
-        opacity: 0;
-    }
-
-    55% {
-        opacity: .3;
-    }
-
-    71% {
-        opacity: .85;
-    }
-
-    72% {
-        opacity: .1;
-    }
-
-    73% {
-        opacity: 1;
-    }
-
-    74% {
+    16% {
         opacity: .2;
     }
 
-    75% {
-        opacity: 1;
+    17% {
+        opacity: .8;
     }
 
-    90% {
-        opacity: .7;
+    41% {
+        opacity: .35;
     }
 
-    91% {
-        opacity: 1;
-    }
-}
-
-
-/* JOLT */
-
-@keyframes jolt {
-
-    0%, 92%, 100% {
-
-        transform:
-            translate3d(0,0,0);
-    }
-
-    93% {
-
-        transform:
-            translate3d(-5px,0,0)
-            skewX(-8deg);
-    }
-
-    94% {
-
-        transform:
-            translate3d(6px,0,0)
-            skewX(5deg);
-    }
-
-    95% {
-
-        transform:
-            translate3d(-2px,0,0);
-    }
-
-    96% {
-
-        transform:
-            translate3d(0,0,0);
+    71% {
+        opacity: .45;
     }
 }
 
 
-/* RED GLITCH */
+@keyframes redGlitch {
 
-@keyframes glitch-red {
-
-    0%, 78%, 100% {
+    0%,
+    76%,
+    100% {
         opacity: 0;
     }
 
-    79% {
-
-        opacity: 1;
+    77% {
+        opacity: .9;
 
         clip-path:
-            inset(0 0 70% 0);
+            inset(0 0 65% 0);
 
         transform:
-            translate(-6px,0);
+            translateX(-7px);
     }
 
-    80% {
-
-        opacity: 1;
+    78% {
+        opacity: .8;
 
         clip-path:
             inset(45% 0 20% 0);
 
         transform:
-            translate(5px,1px);
+            translateX(6px);
     }
 
-    81% {
-
-        opacity: 1;
-
-        clip-path:
-            inset(75% 0 0 0);
-
-        transform:
-            translate(-3px,-1px);
-    }
-
-    82% {
+    79% {
         opacity: 0;
     }
 
-    90% {
-
-        opacity: 1;
+    91% {
+        opacity: .8;
 
         clip-path:
             inset(20% 0 55% 0);
 
         transform:
-            translate(7px,0);
+            translateX(5px);
     }
 
-    91% {
+    92% {
         opacity: 0;
     }
 }
 
 
-/* CYAN GLITCH */
+@keyframes cyanGlitch {
 
-@keyframes glitch-cyan {
-
-    0%, 60%, 100% {
+    0%,
+    58%,
+    100% {
         opacity: 0;
     }
 
-    61% {
-
-        opacity: 1;
+    59% {
+        opacity: .8;
 
         clip-path:
             inset(60% 0 10% 0);
 
         transform:
-            translate(6px,0);
+            translateX(7px);
     }
 
-    62% {
-
-        opacity: 1;
+    60% {
+        opacity: .75;
 
         clip-path:
             inset(10% 0 65% 0);
 
         transform:
-            translate(-7px,1px);
+            translateX(-6px);
     }
 
-    63% {
+    61% {
         opacity: 0;
     }
 
     84% {
-
-        opacity: 1;
+        opacity: .75;
 
         clip-path:
             inset(35% 0 35% 0);
 
         transform:
-            translate(-4px,0);
+            translateX(-5px);
     }
 
     85% {
-
-        opacity: 1;
-
-        clip-path:
-            inset(0 0 85% 0);
-
-        transform:
-            translate(5px,0);
-    }
-
-    86% {
         opacity: 0;
     }
 }
@@ -622,12 +531,10 @@ body {
 
 .network {
 
-    position: relative;
-
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(2, minmax(0, 1fr));
 
     gap: 22px;
 
@@ -643,13 +550,9 @@ body {
 
 .node {
 
-    position: relative;
-
     min-height: 235px;
 
     display: flex;
-
-    flex-direction: column;
 
     align-items: center;
 
@@ -657,41 +560,34 @@ body {
 
     padding: 20px;
 
-    border: 1px solid #2d352f;
+    border: 1px solid #2b332d;
 
     background:
-
         linear-gradient(
             135deg,
-            rgba(40,50,42,.16),
-            rgba(3,5,4,.92)
+            rgba(35,45,37,.16),
+            rgba(2,4,3,.94)
         );
 
     transition:
-
         border-color .25s ease,
-
         transform .25s ease,
-
         box-shadow .25s ease;
 }
 
 
 .node:hover {
 
-    border-color: #667466;
+    border-color: #647064;
 
     transform:
         translateY(-4px);
 
     box-shadow:
-
         0 0 25px
         rgba(100,130,100,.08);
 }
 
-
-/* LINK */
 
 .node a {
 
@@ -728,9 +624,8 @@ body {
     border: 1px solid #9aa29a;
 
     box-shadow:
-
         0 0 18px
-        rgba(0,0,0,.6);
+        rgba(0,0,0,.7);
 }
 
 
@@ -781,13 +676,11 @@ body {
 
 .footer {
 
-    position: relative;
-
     margin-top: 45px;
 
     padding-top: 20px;
 
-    border-top: 1px solid #202720;
+    border-top: 1px solid #1c211d;
 
     text-align: center;
 
@@ -824,7 +717,8 @@ body {
 
 
 /* =========================
-   TABLET / PHONE
+   PHONE
+   ALWAYS 2 × 2
 ========================= */
 
 @media (max-width: 700px) {
@@ -835,104 +729,111 @@ body {
 
     .page {
 
-        padding: 20px 14px;
+        padding:
+            20px 12px;
 
         min-height:
             calc(100vh - 16px);
     }
 
     .header {
+
         margin-bottom: 28px;
     }
 
     .header h1 {
+
         letter-spacing: 5px;
     }
 
     .slogan {
 
-        letter-spacing: 2px;
+        font-size: 12px;
 
-        font-size: 13px;
+        letter-spacing: 1.5px;
     }
 
     .network {
 
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2, minmax(0, 1fr));
 
-        gap: 14px;
+        gap: 12px;
     }
 
     .node {
 
-        min-height: 205px;
+        min-height: 190px;
 
-        padding: 12px;
+        padding: 10px;
     }
 
     .qr {
 
-        width: 125px;
-        height: 125px;
+        width: 110px;
+        height: 110px;
+
+        padding: 6px;
     }
 
     .label {
 
-        margin-top: 11px;
+        margin-top: 10px;
 
-        font-size: 11px;
+        font-size: 10px;
 
         letter-spacing: 2px;
     }
 
     .description {
 
-        font-size: 8px;
+        font-size: 7px;
+
+        letter-spacing: .5px;
     }
 
-    .node:hover {
+    .status {
 
-        transform:
-            translateY(-3px);
+        font-size: 9px;
     }
 }
 
 
-/* SMALL PHONE */
+/* =========================
+   VERY SMALL PHONE
+   STILL 2 × 2
+========================= */
 
-@media (max-width: 430px) {
+@media (max-width: 380px) {
 
     .network {
 
-        grid-template-columns:
-            1fr;
+        gap: 8px;
     }
 
     .node {
 
-        min-height: 210px;
+        min-height: 175px;
+
+        padding: 7px;
     }
 
     .qr {
 
-        width: 145px;
-        height: 145px;
+        width: 92px;
+        height: 92px;
     }
-}
 
+    .label {
 
-/* REDUCE MOTION */
+        font-size: 9px;
 
-@media (prefers-reduced-motion: reduce) {
+        letter-spacing: 1px;
+    }
 
-    .slogan,
-    .slogan::before,
-    .slogan::after,
-    .noise::before,
-    .noise::after {
+    .description {
 
-        animation: none;
+        font-size: 6px;
     }
 }
 
@@ -944,7 +845,15 @@ body {
 
 <div class="page">
 
-    <div class="noise"></div>
+
+    <!-- SCANLINES -->
+
+    <div class="scanlines"></div>
+
+
+    <!-- LIVING FOG -->
+
+    <div class="fog"></div>
 
 
     <!-- HEADER -->
@@ -956,12 +865,10 @@ body {
         </h1>
 
 
-        <div
-            class="slogan"
-            id="slogan"
-            data-text="ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ"
-        >
+        <div class="slogan">
+
             ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
+
         </div>
 
 
@@ -978,7 +885,7 @@ body {
     </header>
 
 
-    <!-- QR NETWORK -->
+    <!-- NETWORK -->
 
     <main class="network">
 
@@ -1129,7 +1036,7 @@ body {
 
         CONNECTION: ACTIVE<br>
 
-        LAST SIGNAL: UNKNOWN
+        SIGNAL: ONLINE
 
 
         <div class="warning">
@@ -1149,142 +1056,6 @@ body {
     </footer>
 
 </div>
-
-
-<script>
-
-/* =========================
-   SLOGAN GLITCH
-========================= */
-
-(function () {
-
-    var el =
-        document.getElementById('slogan');
-
-    if (!el) return;
-
-
-    if (
-        window.matchMedia &&
-        window.matchMedia(
-            '(prefers-reduced-motion: reduce)'
-        ).matches
-    ) {
-        return;
-    }
-
-
-    var original =
-        el.getAttribute('data-text');
-
-
-    var junk =
-        '█▓▒░▚▞#@%&?!/\\|ЖФЩЪЫ';
-
-
-    function set(text) {
-
-        el.textContent = text;
-
-        el.setAttribute(
-            'data-text',
-            text
-        );
-    }
-
-
-    function corrupt() {
-
-        var chars =
-            original.split('');
-
-        var hits =
-            2 +
-            Math.floor(
-                Math.random() * 4
-            );
-
-
-        for (
-            var i = 0;
-            i < hits;
-            i++
-        ) {
-
-            var pos =
-                Math.floor(
-                    Math.random() *
-                    chars.length
-                );
-
-
-            if (
-                chars[pos] !== ' ' &&
-                chars[pos] !== ','
-            ) {
-
-                chars[pos] =
-                    junk.charAt(
-                        Math.floor(
-                            Math.random() *
-                            junk.length
-                        )
-                    );
-            }
-        }
-
-
-        set(chars.join(''));
-
-
-        setTimeout(
-            function () {
-
-                set(original);
-
-            },
-            90 +
-            Math.random() * 140
-        );
-    }
-
-
-    function loop() {
-
-        setTimeout(
-
-            function () {
-
-                corrupt();
-
-
-                if (
-                    Math.random() < .35
-                ) {
-
-                    setTimeout(
-                        corrupt,
-                        220
-                    );
-                }
-
-
-                loop();
-
-            },
-
-            2500 +
-            Math.random() * 4500
-        );
-    }
-
-
-    loop();
-
-})();
-
-</script>
 
 </body>
 </html>
