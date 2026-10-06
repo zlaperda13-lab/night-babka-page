@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NIGHT BABKA</title>
 
 <style>
@@ -10,159 +11,331 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     min-height: 100%;
-    background: #080909;
-    color: #b8c0b8;
+    background: #060807;
+    color: #b8c1b8;
     font-family: monospace;
 }
 
 body {
     display: flex;
     justify-content: center;
-    padding: 30px 15px;
+    padding: 20px 12px;
 }
 
 .page {
     width: 100%;
     max-width: 900px;
-    min-height: 100vh;
+    min-height: calc(100vh - 40px);
     position: relative;
     overflow: hidden;
-    padding: 30px;
-    border: 1px solid #252b27;
+
+    padding: 32px;
+
+    border: 1px solid #252c27;
+
     background:
-        linear-gradient(rgba(0,255,120,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,120,.025) 1px, transparent 1px),
+        linear-gradient(rgba(120,150,120,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,150,120,.025) 1px, transparent 1px),
         #090b0a;
+
     background-size: 25px 25px;
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,.7),
+        inset 0 0 80px rgba(0,0,0,.45);
 }
+
+/* лёгкий телевизионный шум */
 
 .noise {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: .08;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 3px,
-        #fff 4px
-    );
+    opacity: .055;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            #ffffff 4px
+        );
 }
+
+/* заголовок */
 
 .header {
     position: relative;
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 38px;
 }
 
 .header h1 {
     margin: 0;
-    font-size: clamp(28px, 7vw, 60px);
+
+    font-size: clamp(30px, 8vw, 64px);
     letter-spacing: 8px;
-    color: #d4ddd4;
+
+    color: #d3dad3;
+
+    text-shadow:
+        0 0 12px rgba(150,180,150,.12);
+}
+
+.subtitle {
+    margin-top: 12px;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    color: #596359;
 }
 
 .status {
-    margin-top: 10px;
-    color: #657267;
-    font-size: 12px;
+    margin-top: 18px;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    color: #4e584f;
 }
 
 .status span {
-    color: #78a878;
+    color: #789278;
 }
+
+/* сетка */
 
 .network {
     position: relative;
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+
     gap: 22px;
-    align-items: center;
+
+    max-width: 700px;
+    margin: 0 auto;
 }
 
+/* карточка */
+
 .node {
-    min-height: 170px;
-    border: 1px solid #303832;
-    background: rgba(10,13,11,.88);
+    position: relative;
+
+    min-height: 235px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
+
+    padding: 20px;
+
+    border: 1px solid #2d352f;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(40,50,42,.20),
+            rgba(5,8,6,.88)
+        );
+
+    transition:
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
+/* небольшой разброс */
+
 .node:nth-child(2) {
-    transform: translateY(25px);
+    transform: translateY(18px);
+}
+
+.node:nth-child(3) {
+    transform: translateY(-10px);
 }
 
 .node:nth-child(4) {
-    transform: translateY(-20px);
+    transform: translateY(25px);
 }
 
-.node:nth-child(6) {
-    transform: translateY(30px);
+.node:nth-child(5) {
+    grid-column: 1 / 3;
+    max-width: 340px;
+    width: 100%;
+    justify-self: center;
+
+    transform: translateY(5px);
 }
+
+/* наведение */
+
+.node:hover {
+    border-color: #667466;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 0 25px rgba(100,130,100,.08);
+}
+
+.node:nth-child(2):hover,
+.node:nth-child(3):hover,
+.node:nth-child(4):hover {
+    transform: translateY(-4px);
+}
+
+.node:nth-child(5):hover {
+    transform: translateY(-4px);
+}
+
+/* ссылка */
+
+.node a {
+    text-decoration: none;
+    color: inherit;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* QR */
 
 .qr {
-    width: 115px;
-    height: 115px;
-    background: #eee;
-    padding: 5px;
+    width: 155px;
+    height: 155px;
+
+    padding: 7px;
+
+    background: #eeeeea;
+
+    border: 1px solid #9aa29a;
+
+    box-shadow:
+        0 0 18px rgba(0,0,0,.6);
 }
+
+.qr img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+/* подпись */
 
 .label {
-    margin-top: 12px;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #6f796f;
+    margin-top: 15px;
+
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    color: #899489;
+
+    text-transform: uppercase;
 }
 
-.center {
-    grid-column: 2;
-    grid-row: 2;
-    min-height: 220px;
-    border-color: #536053;
+.description {
+    margin-top: 7px;
+
+    font-size: 9px;
+    letter-spacing: 1px;
+
+    color: #4e584f;
 }
 
-.center .qr {
-    width: 150px;
-    height: 150px;
-}
-
-.center .label {
-    color: #9baa9b;
-}
+/* нижняя часть */
 
 .footer {
     position: relative;
+
     margin-top: 45px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #202720;
+
     text-align: center;
+
     font-size: 10px;
-    color: #4f584f;
-    line-height: 1.8;
+    line-height: 1.9;
+
+    letter-spacing: 1px;
+
+    color: #485148;
 }
 
+.footer .warning {
+    margin-top: 12px;
+
+    color: #626d62;
+}
+
+/* мобильные */
+
 @media (max-width: 650px) {
+
+    body {
+        padding: 8px;
+    }
+
     .page {
-        padding: 18px;
+        padding: 20px 14px;
+        min-height: calc(100vh - 16px);
+    }
+
+    .header {
+        margin-bottom: 28px;
+    }
+
+    .header h1 {
+        letter-spacing: 5px;
     }
 
     .network {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .center {
-        grid-column: 1 / 3;
-        grid-row: auto;
-    }
-
+    .node,
     .node:nth-child(2),
+    .node:nth-child(3),
     .node:nth-child(4),
-    .node:nth-child(6) {
+    .node:nth-child(5) {
+        grid-column: 1;
         transform: none;
+        max-width: none;
+    }
+
+    .node:hover,
+    .node:nth-child(2):hover,
+    .node:nth-child(3):hover,
+    .node:nth-child(4):hover,
+    .node:nth-child(5):hover {
+        transform: translateY(-3px);
+    }
+
+    .node {
+        min-height: 215px;
+    }
+
+    .qr {
+        width: 145px;
+        height: 145px;
     }
 }
 </style>
@@ -172,54 +345,193 @@ body {
 
 <div class="page">
 
-<div class="noise"></div>
+    <div class="noise"></div>
 
-<div class="header">
-    <h1>NIGHT BABKA</h1>
-    <div class="status">
-        NETWORK STATUS: <span>UNKNOWN</span>
-    </div>
-</div>
+    <header class="header">
 
-<div class="network">
+        <h1>NIGHT BABKA</h1>
 
-    <div class="node">
-        <div class="qr">QR</div>
-        <div class="label">NODE_01</div>
-    </div>
+        <div class="subtitle">
+            ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
+        </div>
 
-    <div class="node">
-        <div class="qr">QR</div>
-        <div class="label">NODE_02</div>
-    </div>
+        <div class="status">
+            NETWORK STATUS:
+            <span>UNKNOWN</span>
+        </div>
 
-    <div class="node">
-        <div class="qr">QR</div>
-        <div class="label">NODE_03</div>
-    </div>
+    </header>
 
-    <div class="node">
-        <div class="qr">QR</div>
-        <div class="label">ARCHIVE</div>
-    </div>
 
-    <div class="node center">
-        <div class="qr">QR</div>
-        <div class="label">ENTER</div>
-    </div>
+    <main class="network">
 
-    <div class="node">
-        <div class="qr">QR</div>
-        <div class="label">UNKNOWN</div>
-    </div>
 
-</div>
+        <!-- VK -->
 
-<div class="footer">
-    NODE COUNT: 06<br>
-    LAST CONNECTION: UNKNOWN<br>
-    PORT: OPEN
-</div>
+        <div class="node">
+
+            <a
+                href="https://vk.ru/night_babka"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="qr">
+                    <img
+                        src="vk.png"
+                        alt="QR-код VK"
+                    >
+                </div>
+
+                <div class="label">
+                    VK
+                </div>
+
+                <div class="description">
+                    SOCIAL NODE
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- Telegram -->
+
+        <div class="node">
+
+            <a
+                href="https://t.me/Night_Babka"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="qr">
+                    <img
+                        src="telegram.png"
+                        alt="QR-код Telegram"
+                    >
+                </div>
+
+                <div class="label">
+                    TELEGRAM
+                </div>
+
+                <div class="description">
+                    PRIVATE CHANNEL
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- Одноклассники -->
+
+        <div class="node">
+
+            <a
+                href="https://ok.ru/group/70000061036682"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="qr">
+                    <img
+                        src="ok.png"
+                        alt="QR-код Одноклассники"
+                    >
+                </div>
+
+                <div class="label">
+                    OK
+                </div>
+
+                <div class="description">
+                    ARCHIVE NODE
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- YouTube -->
+
+        <div class="node">
+
+            <a
+                href="https://youtube.com/@nightbabka"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="qr">
+                    <img
+                        src="youtube.png"
+                        alt="QR-код YouTube"
+                    >
+                </div>
+
+                <div class="label">
+                    YOUTUBE
+                </div>
+
+                <div class="description">
+                    VIDEO FEED
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- Планета -->
+
+        <div class="node">
+
+            <a
+                href="https://planeta.ru/campaigns/night_babka"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <div class="qr">
+                    <img
+                        src="planeta.png"
+                        alt="QR-код Планета"
+                    >
+                </div>
+
+                <div class="label">
+                    ПЛАНЕТА
+                </div>
+
+                <div class="description">
+                    SUPPORT NODE
+                </div>
+
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <footer class="footer">
+
+        NODE COUNT: 05<br>
+
+        CONNECTION: ACTIVE<br>
+
+        LAST SIGNAL: UNKNOWN
+
+        <div class="warning">
+            NIGHT BABKA — ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ.
+        </div>
+
+    </footer>
 
 </div>
 
