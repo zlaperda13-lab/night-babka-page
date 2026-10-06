@@ -7,6 +7,7 @@
 <title>NIGHT BABKA</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -15,225 +16,643 @@ html,
 body {
     margin: 0;
     min-height: 100%;
-    background: #060807;
+
+    background: #020302;
+
     color: #b8c1b8;
+
     font-family: monospace;
 }
 
 body {
     display: flex;
     justify-content: center;
+
     padding: 20px 12px;
 }
 
+
+/* =========================
+   MAIN PAGE
+========================= */
+
 .page {
+
     width: 100%;
     max-width: 900px;
+
     min-height: calc(100vh - 40px);
+
     position: relative;
+
     overflow: hidden;
+
+    isolation: isolate;
+
     padding: 32px;
 
-    border: 1px solid #252c27;
+    border: 1px solid #202520;
 
     background:
-        linear-gradient(rgba(120,150,120,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(120,150,120,.025) 1px, transparent 1px),
-        #090b0a;
+
+        linear-gradient(
+            rgba(80,100,80,.018) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(80,100,80,.018) 1px,
+            transparent 1px
+        ),
+
+        #050605;
 
     background-size: 25px 25px;
 
     box-shadow:
-        0 0 50px rgba(0,0,0,.7),
-        inset 0 0 80px rgba(0,0,0,.45);
+
+        0 0 70px rgba(0,0,0,.9),
+
+        inset 0 0 100px rgba(0,0,0,.7);
 }
 
+
+/* =========================
+   NOISE + FOG
+========================= */
+
 .noise {
+
     position: absolute;
+
     inset: 0;
+
     pointer-events: none;
-    opacity: .055;
+
+    overflow: hidden;
+
+    opacity: .045;
 
     background:
+
         repeating-linear-gradient(
             0deg,
             transparent 0px,
             transparent 3px,
             #ffffff 4px
         );
+
+    z-index: 5;
 }
 
-.header {
+
+/* FOG */
+
+.noise::before,
+.noise::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 160%;
+    height: 65%;
+
+    left: -30%;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+
+            rgba(130,145,130,.09) 0%,
+
+            rgba(100,115,100,.045) 25%,
+
+            rgba(50,60,50,.02) 48%,
+
+            transparent 72%
+        );
+
+    filter: blur(28px);
+
+    opacity: .65;
+}
+
+
+.noise::before {
+
+    top: 12%;
+
+    animation:
+
+        fogMove
+        24s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+.noise::after {
+
+    top: 48%;
+
+    opacity: .38;
+
+    transform: scaleY(.75);
+
+    animation:
+
+        fogMoveReverse
+        31s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+/* FOG MOVEMENT */
+
+@keyframes fogMove {
+
+    0% {
+
+        transform:
+            translate3d(-12%, 0, 0)
+            scale(1);
+    }
+
+    50% {
+
+        transform:
+            translate3d(8%, 4%, 0)
+            scale(1.08);
+    }
+
+    100% {
+
+        transform:
+            translate3d(-3%, -3%, 0)
+            scale(1.15);
+    }
+}
+
+
+@keyframes fogMoveReverse {
+
+    0% {
+
+        transform:
+            translate3d(10%, 3%, 0)
+            scale(1.1);
+    }
+
+    50% {
+
+        transform:
+            translate3d(-8%, -2%, 0)
+            scale(1);
+    }
+
+    100% {
+
+        transform:
+            translate3d(5%, 4%, 0)
+            scale(1.12);
+    }
+}
+
+
+/* =========================
+   CONTENT ABOVE FOG
+========================= */
+
+.header,
+.network,
+.footer {
+
     position: relative;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+
     text-align: center;
+
     margin-bottom: 38px;
 }
 
+
 .header h1 {
+
     margin: 0;
 
-    font-size: clamp(30px, 8vw, 64px);
+    font-size:
+        clamp(
+            30px,
+            8vw,
+            64px
+        );
+
     letter-spacing: 8px;
 
     color: #d3dad3;
 
     text-shadow:
-        0 0 12px rgba(150,180,150,.12);
+
+        0 0 12px
+        rgba(150,180,150,.12);
 }
 
-/* ===== СЛОГАН: МЕРЦАНИЕ + ГЛИЧ ===== */
+
+/* =========================
+   SLOGAN
+========================= */
 
 .slogan {
+
     position: relative;
+
     display: inline-block;
+
     max-width: 100%;
 
     margin-top: 18px;
+
     padding: 2px 4px;
 
-    font-size: clamp(12px, 3.1vw, 18px);
+    font-size:
+        clamp(
+            12px,
+            3.1vw,
+            18px
+        );
+
     font-weight: bold;
+
     letter-spacing: 4px;
+
     line-height: 1.5;
 
     color: #9aa59a;
 
     text-shadow:
-        0 0 8px rgba(160,40,35,.35);
+
+        0 0 8px
+        rgba(160,40,35,.35);
 
     animation:
-        flicker 6s infinite,
-        jolt 7s infinite;
+
+        flicker
+        6s
+        infinite,
+
+        jolt
+        7s
+        infinite;
 }
 
-/* копии текста со сдвигом цвета */
+
+/* GLITCH COPIES */
 
 .slogan::before,
 .slogan::after {
+
     content: attr(data-text);
 
     position: absolute;
+
     inset: 0;
+
     padding: inherit;
 
     letter-spacing: inherit;
+
     font-weight: inherit;
+
     line-height: inherit;
+
     text-align: center;
+
     text-shadow: none;
 
     opacity: 0;
+
     pointer-events: none;
 }
 
+
 .slogan::before {
+
     color: #b3201d;
-    animation: glitch-red 4.3s infinite steps(1, end);
+
+    animation:
+
+        glitch-red
+        4.3s
+        infinite
+        steps(1, end);
 }
+
 
 .slogan::after {
+
     color: #3e7a78;
-    animation: glitch-cyan 5.1s infinite steps(1, end);
+
+    animation:
+
+        glitch-cyan
+        5.1s
+        infinite
+        steps(1, end);
 }
 
-/* рваное мерцание, местами полное затухание */
+
+/* FLICKER */
 
 @keyframes flicker {
-    0%, 17%, 19%, 22%, 54%, 56%, 100% { opacity: 1; }
-    18%  { opacity: .15; }
-    20%  { opacity: .6; }
-    21%  { opacity: 0; }
-    55%  { opacity: .3; }
-    71%  { opacity: .85; }
-    72%  { opacity: .1; }
-    73%  { opacity: 1; }
-    74%  { opacity: .2; }
-    75%  { opacity: 1; }
-    90%  { opacity: .7; }
-    91%  { opacity: 1; }
-}
 
-/* короткие рывки всего слогана */
+    0%, 17%, 19%, 22%, 54%, 56%, 100% {
+        opacity: 1;
+    }
 
-@keyframes jolt {
-    0%, 92%, 100% { transform: none; filter: none; }
-    93% { transform: translateX(-5px) skewX(-8deg); filter: contrast(1.8) brightness(1.4); }
-    94% { transform: translateX(6px) skewX(5deg); }
-    95% { transform: translateX(-2px); filter: blur(1px); }
-    96% { transform: none; filter: none; }
-}
+    18% {
+        opacity: .15;
+    }
 
-/* красный слой: вспышки полосами */
+    20% {
+        opacity: .6;
+    }
 
-@keyframes glitch-red {
-    0%, 78%, 100% { opacity: 0; }
-    79% { opacity: 1; clip-path: inset(0 0 70% 0);  transform: translate(-6px, 0); }
-    80% { opacity: 1; clip-path: inset(45% 0 20% 0); transform: translate(5px, 1px); }
-    81% { opacity: 1; clip-path: inset(75% 0 0 0);   transform: translate(-3px, -1px); }
-    82% { opacity: 0; }
-    90% { opacity: 1; clip-path: inset(20% 0 55% 0); transform: translate(7px, 0); }
-    91% { opacity: 0; }
-}
+    21% {
+        opacity: 0;
+    }
 
-/* бирюзовый слой: в другой момент */
+    55% {
+        opacity: .3;
+    }
 
-@keyframes glitch-cyan {
-    0%, 60%, 100% { opacity: 0; }
-    61% { opacity: 1; clip-path: inset(60% 0 10% 0); transform: translate(6px, 0); }
-    62% { opacity: 1; clip-path: inset(10% 0 65% 0); transform: translate(-7px, 1px); }
-    63% { opacity: 0; }
-    84% { opacity: 1; clip-path: inset(35% 0 35% 0); transform: translate(-4px, 0); }
-    85% { opacity: 1; clip-path: inset(0 0 85% 0);   transform: translate(5px, 0); }
-    86% { opacity: 0; }
-}
+    71% {
+        opacity: .85;
+    }
 
-@media (prefers-reduced-motion: reduce) {
-    .slogan,
-    .slogan::before,
-    .slogan::after {
-        animation: none;
+    72% {
+        opacity: .1;
+    }
+
+    73% {
+        opacity: 1;
+    }
+
+    74% {
+        opacity: .2;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: .7;
+    }
+
+    91% {
+        opacity: 1;
     }
 }
 
-/* ===== /СЛОГАН ===== */
+
+/* JOLT */
+
+@keyframes jolt {
+
+    0%, 92%, 100% {
+
+        transform:
+            translate3d(0,0,0);
+    }
+
+    93% {
+
+        transform:
+            translate3d(-5px,0,0)
+            skewX(-8deg);
+    }
+
+    94% {
+
+        transform:
+            translate3d(6px,0,0)
+            skewX(5deg);
+    }
+
+    95% {
+
+        transform:
+            translate3d(-2px,0,0);
+    }
+
+    96% {
+
+        transform:
+            translate3d(0,0,0);
+    }
+}
+
+
+/* RED GLITCH */
+
+@keyframes glitch-red {
+
+    0%, 78%, 100% {
+        opacity: 0;
+    }
+
+    79% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(0 0 70% 0);
+
+        transform:
+            translate(-6px,0);
+    }
+
+    80% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(45% 0 20% 0);
+
+        transform:
+            translate(5px,1px);
+    }
+
+    81% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(75% 0 0 0);
+
+        transform:
+            translate(-3px,-1px);
+    }
+
+    82% {
+        opacity: 0;
+    }
+
+    90% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(20% 0 55% 0);
+
+        transform:
+            translate(7px,0);
+    }
+
+    91% {
+        opacity: 0;
+    }
+}
+
+
+/* CYAN GLITCH */
+
+@keyframes glitch-cyan {
+
+    0%, 60%, 100% {
+        opacity: 0;
+    }
+
+    61% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(60% 0 10% 0);
+
+        transform:
+            translate(6px,0);
+    }
+
+    62% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(10% 0 65% 0);
+
+        transform:
+            translate(-7px,1px);
+    }
+
+    63% {
+        opacity: 0;
+    }
+
+    84% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(35% 0 35% 0);
+
+        transform:
+            translate(-4px,0);
+    }
+
+    85% {
+
+        opacity: 1;
+
+        clip-path:
+            inset(0 0 85% 0);
+
+        transform:
+            translate(5px,0);
+    }
+
+    86% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   STATUS
+========================= */
 
 .status {
+
     margin-top: 18px;
 
     font-size: 10px;
+
     letter-spacing: 2px;
 
     color: #4e584f;
 }
 
+
 .status span {
+
     color: #789278;
 }
 
-/* РОВНАЯ СЕТКА 2 × 2 */
+
+/* =========================
+   QR NETWORK
+========================= */
 
 .network {
+
     position: relative;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 22px;
 
     max-width: 700px;
+
     margin: 0 auto;
 }
 
-/* КАРТОЧКА */
+
+/* =========================
+   NODE
+========================= */
 
 .node {
+
     position: relative;
 
     min-height: 235px;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
@@ -241,43 +660,64 @@ body {
     border: 1px solid #2d352f;
 
     background:
+
         linear-gradient(
             135deg,
-            rgba(40,50,42,.20),
-            rgba(5,8,6,.88)
+            rgba(40,50,42,.16),
+            rgba(3,5,4,.92)
         );
 
     transition:
+
         border-color .25s ease,
+
         transform .25s ease,
+
         box-shadow .25s ease;
 }
 
+
 .node:hover {
+
     border-color: #667466;
 
-    transform: translateY(-4px);
+    transform:
+        translateY(-4px);
 
     box-shadow:
-        0 0 25px rgba(100,130,100,.08);
+
+        0 0 25px
+        rgba(100,130,100,.08);
 }
 
+
+/* LINK */
+
 .node a {
+
     text-decoration: none;
+
     color: inherit;
 
     width: 100%;
     height: 100%;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
 }
 
-/* QR */
+
+/* =========================
+   QR
+========================= */
 
 .qr {
+
     width: 155px;
     height: 155px;
 
@@ -288,10 +728,14 @@ body {
     border: 1px solid #9aa29a;
 
     box-shadow:
-        0 0 18px rgba(0,0,0,.6);
+
+        0 0 18px
+        rgba(0,0,0,.6);
 }
 
+
 .qr img {
+
     display: block;
 
     width: 100%;
@@ -300,12 +744,17 @@ body {
     object-fit: contain;
 }
 
-/* ПОДПИСИ */
+
+/* =========================
+   LABELS
+========================= */
 
 .label {
+
     margin-top: 15px;
 
     font-size: 12px;
+
     letter-spacing: 3px;
 
     color: #899489;
@@ -313,18 +762,25 @@ body {
     text-transform: uppercase;
 }
 
+
 .description {
+
     margin-top: 7px;
 
     font-size: 9px;
+
     letter-spacing: 1px;
 
     color: #4e584f;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer {
+
     position: relative;
 
     margin-top: 45px;
@@ -336,6 +792,7 @@ body {
     text-align: center;
 
     font-size: 10px;
+
     line-height: 1.9;
 
     letter-spacing: 1px;
@@ -343,23 +800,45 @@ body {
     color: #485148;
 }
 
+
 .footer .warning {
+
     margin-top: 12px;
 
     color: #626d62;
 }
 
-/* ТЕЛЕФОН */
 
-@media (max-width: 650px) {
+.author {
+
+    margin-top: 18px;
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
+    color: #303730;
+
+    opacity: .65;
+}
+
+
+/* =========================
+   TABLET / PHONE
+========================= */
+
+@media (max-width: 700px) {
 
     body {
         padding: 8px;
     }
 
     .page {
+
         padding: 20px 14px;
-        min-height: calc(100vh - 16px);
+
+        min-height:
+            calc(100vh - 16px);
     }
 
     .header {
@@ -371,29 +850,95 @@ body {
     }
 
     .slogan {
+
         letter-spacing: 2px;
+
+        font-size: 13px;
     }
 
     .network {
-        grid-template-columns: 1fr;
-        gap: 16px;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 14px;
     }
 
     .node {
-        min-height: 215px;
+
+        min-height: 205px;
+
+        padding: 12px;
     }
 
     .qr {
-        width: 145px;
-        height: 145px;
+
+        width: 125px;
+        height: 125px;
+    }
+
+    .label {
+
+        margin-top: 11px;
+
+        font-size: 11px;
+
+        letter-spacing: 2px;
+    }
+
+    .description {
+
+        font-size: 8px;
     }
 
     .node:hover {
-        transform: translateY(-3px);
+
+        transform:
+            translateY(-3px);
     }
 }
+
+
+/* SMALL PHONE */
+
+@media (max-width: 430px) {
+
+    .network {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .node {
+
+        min-height: 210px;
+    }
+
+    .qr {
+
+        width: 145px;
+        height: 145px;
+    }
+}
+
+
+/* REDUCE MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .slogan,
+    .slogan::before,
+    .slogan::after,
+    .noise::before,
+    .noise::after {
+
+        animation: none;
+    }
+}
+
 </style>
 </head>
+
 
 <body>
 
@@ -401,21 +946,42 @@ body {
 
     <div class="noise"></div>
 
+
+    <!-- HEADER -->
+
     <header class="header">
 
-        <h1>NIGHT BABKA</h1>
+        <h1>
+            NIGHT BABKA
+        </h1>
 
-        <div class="slogan" id="slogan" data-text="ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ">ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ</div>
+
+        <div
+            class="slogan"
+            id="slogan"
+            data-text="ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ"
+        >
+            ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ
+        </div>
+
 
         <div class="status">
+
             NETWORK STATUS:
-            <span>UNKNOWN</span>
+
+            <span>
+                ALWAYS ACTIVE
+            </span>
+
         </div>
 
     </header>
 
 
+    <!-- QR NETWORK -->
+
     <main class="network">
+
 
         <!-- VK -->
 
@@ -428,15 +994,19 @@ body {
             >
 
                 <div class="qr">
+
                     <img
                         src="vk.png"
                         alt="QR-код VK"
                     >
+
                 </div>
+
 
                 <div class="label">
                     VK
                 </div>
+
 
                 <div class="description">
                     SOCIAL NODE
@@ -458,15 +1028,19 @@ body {
             >
 
                 <div class="qr">
+
                     <img
                         src="telegram.png"
                         alt="QR-код Telegram"
                     >
+
                 </div>
+
 
                 <div class="label">
                     TELEGRAM
                 </div>
+
 
                 <div class="description">
                     PRIVATE CHANNEL
@@ -488,15 +1062,19 @@ body {
             >
 
                 <div class="qr">
+
                     <img
                         src="ok.png"
                         alt="QR-код Одноклассники"
                     >
+
                 </div>
+
 
                 <div class="label">
                     OK
                 </div>
+
 
                 <div class="description">
                     ARCHIVE NODE
@@ -518,15 +1096,19 @@ body {
             >
 
                 <div class="qr">
+
                     <img
                         src="youtube.png"
                         alt="QR-код YouTube"
                     >
+
                 </div>
+
 
                 <div class="label">
                     YOUTUBE
                 </div>
+
 
                 <div class="description">
                     VIDEO FEED
@@ -539,6 +1121,8 @@ body {
     </main>
 
 
+    <!-- FOOTER -->
+
     <footer class="footer">
 
         NODE COUNT: 04<br>
@@ -547,52 +1131,159 @@ body {
 
         LAST SIGNAL: UNKNOWN
 
+
         <div class="warning">
-            NIGHT BABKA — ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ.
+
+            NIGHT BABKA —
+            ИСТОРИИ, КОТОРЫЕ ЛУЧШЕ НЕ ЧИТАТЬ НОЧЬЮ.
+
+        </div>
+
+
+        <div class="author">
+
+            AUTHOR: EVGENY KHOMUTOV
+
         </div>
 
     </footer>
 
 </div>
 
-<script>
-/* Слоган иногда "бьётся": часть букв на миг превращается в мусор */
-(function () {
-    var el = document.getElementById('slogan');
-    if (!el) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var original = el.getAttribute('data-text');
-    var junk = '█▓▒░▚▞#@%&?!/\\|ЖФЩЪЫ';
+<script>
+
+/* =========================
+   SLOGAN GLITCH
+========================= */
+
+(function () {
+
+    var el =
+        document.getElementById('slogan');
+
+    if (!el) return;
+
+
+    if (
+        window.matchMedia &&
+        window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches
+    ) {
+        return;
+    }
+
+
+    var original =
+        el.getAttribute('data-text');
+
+
+    var junk =
+        '█▓▒░▚▞#@%&?!/\\|ЖФЩЪЫ';
+
 
     function set(text) {
+
         el.textContent = text;
-        el.setAttribute('data-text', text);
+
+        el.setAttribute(
+            'data-text',
+            text
+        );
     }
+
 
     function corrupt() {
-        var chars = original.split('');
-        var hits = 2 + Math.floor(Math.random() * 4);
-        for (var i = 0; i < hits; i++) {
-            var pos = Math.floor(Math.random() * chars.length);
-            if (chars[pos] !== ' ' && chars[pos] !== ',') {
-                chars[pos] = junk.charAt(Math.floor(Math.random() * junk.length));
+
+        var chars =
+            original.split('');
+
+        var hits =
+            2 +
+            Math.floor(
+                Math.random() * 4
+            );
+
+
+        for (
+            var i = 0;
+            i < hits;
+            i++
+        ) {
+
+            var pos =
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                );
+
+
+            if (
+                chars[pos] !== ' ' &&
+                chars[pos] !== ','
+            ) {
+
+                chars[pos] =
+                    junk.charAt(
+                        Math.floor(
+                            Math.random() *
+                            junk.length
+                        )
+                    );
             }
         }
+
+
         set(chars.join(''));
-        setTimeout(function () { set(original); }, 90 + Math.random() * 140);
+
+
+        setTimeout(
+            function () {
+
+                set(original);
+
+            },
+            90 +
+            Math.random() * 140
+        );
     }
+
 
     function loop() {
-        setTimeout(function () {
-            corrupt();
-            if (Math.random() < 0.35) setTimeout(corrupt, 220);
-            loop();
-        }, 2500 + Math.random() * 4500);
+
+        setTimeout(
+
+            function () {
+
+                corrupt();
+
+
+                if (
+                    Math.random() < .35
+                ) {
+
+                    setTimeout(
+                        corrupt,
+                        220
+                    );
+                }
+
+
+                loop();
+
+            },
+
+            2500 +
+            Math.random() * 4500
+        );
     }
 
+
     loop();
+
 })();
+
 </script>
 
 </body>
